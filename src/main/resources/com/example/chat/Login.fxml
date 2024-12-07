@@ -27,11 +27,6 @@
                 <Font name="Consolas" size="13.0" />
             </font>
         </Button>
-        <Label alignment="CENTER" layoutX="25.0" layoutY="314.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0">
-            <font>
-                <Font name="Consolas" size="20.0" />
-            </font>
-        </Label>
     </AnchorPane>
     <AnchorPane fx:id="RegisterPage" prefHeight="400.0" prefWidth="300.0" style="visibility: false;">
         <Label alignment="CENTER" layoutX="25.0" layoutY="14.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" text="Login:">
@@ -39,29 +34,24 @@
                 <Font name="Consolas" size="20.0" />
             </font>
         </Label>
-        <TextField layoutX="25.0" layoutY="44.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" />
+        <TextField fx:id="RegisterLogin" layoutX="25.0" layoutY="44.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" />
         <Label alignment="CENTER" layoutX="25.0" layoutY="93.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" text="password:">
             <font>
                 <Font name="Consolas" size="20.0" />
             </font>
         </Label>
-        <TextField layoutX="25.0" layoutY="123.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" />
+        <TextField fx:id="RegisterPassword" layoutX="25.0" layoutY="123.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" />
         <Label alignment="CENTER" layoutX="25.0" layoutY="164.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" text="password again:">
             <font>
                 <Font name="Consolas" size="20.0" />
             </font>
         </Label>
-        <TextField layoutX="25.0" layoutY="194.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" />
-        <Button layoutX="25.0" layoutY="282.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Register now!">
+        <TextField fx:id="RegisterPasswordAgain" layoutX="25.0" layoutY="194.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" />
+        <Button layoutX="25.0" layoutY="282.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" mnemonicParsing="false" onAction="#RegisterButton" prefHeight="30.0" prefWidth="250.0" text="Register now!">
             <font>
                 <Font name="Consolas" size="13.0" />
             </font>
         </Button>
-        <Label alignment="CENTER" layoutX="25.0" layoutY="312.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0">
-            <font>
-                <Font name="Consolas" size="20.0" />
-            </font>
-        </Label>
     </AnchorPane>
     <RadioButton layoutX="14.0" layoutY="400.0" mnemonicParsing="false" onAction="#LogRegSelect" prefHeight="43.0" prefWidth="97.0" selected="true" text="Login">
         <font>
@@ -76,4 +66,9 @@
           <Font name="Consolas" size="20.0" />
         </font>
     </RadioButton>
+     <Label fx:id="Errorslabel" alignment="CENTER" layoutX="25.0" layoutY="320.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0">
+         <font>
+             <Font name="Consolas" size="10.0" />
+         </font>
+     </Label>
 </AnchorPane>
