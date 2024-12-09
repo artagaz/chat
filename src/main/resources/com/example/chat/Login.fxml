@@ -15,14 +15,14 @@
                 <Font name="Consolas" size="20.0" />
             </font>
         </Label>
-        <TextField layoutX="25.0" layoutY="44.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" />
+        <TextField fx:id="LoginLogin" layoutX="25.0" layoutY="44.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" />
         <Label alignment="CENTER" layoutX="25.0" layoutY="100.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" text="password:">
             <font>
                 <Font name="Consolas" size="20.0" />
             </font>
         </Label>
-        <TextField layoutX="25.0" layoutY="130.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" />
-        <Button layoutX="25.0" layoutY="284.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Login now!">
+        <TextField fx:id="LoginPassword" layoutX="25.0" layoutY="130.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0" />
+        <Button layoutX="25.0" layoutY="284.0" maxHeight="30.0" maxWidth="250.0" minHeight="30.0" minWidth="250.0" mnemonicParsing="false" onAction="#LoginButton" prefHeight="30.0" prefWidth="250.0" text="Login now!">
             <font>
                 <Font name="Consolas" size="13.0" />
             </font>

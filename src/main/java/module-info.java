@@ -8,4 +8,6 @@ module com.example.chat {
 
     opens com.example.chat to javafx.fxml, com.google.gson;
     exports com.example.chat;
+    exports com.example.chat.MyUtils;
+    opens com.example.chat.MyUtils to com.google.gson, javafx.fxml;
 }

@@ -3,7 +3,40 @@
     "username": "admin",
     "password": "admin132"
   },
-  {"username": "admin1",
+  {
+    "username": "admin1",
     "password": "admin113231233"
+  },
+  {
+    "username": "admin123",
+    "password": "123"
+  },
+  {
+    "username": "admin123",
+    "password": "123"
+  },
+  {
+    "username": "test",
+    "password": "123"
+  },
+  {
+    "username": "test1",
+    "password": "123"
+  },
+  {
+    "username": "aboba",
+    "password": "123"
+  },
+  {
+    "username": "abobaaa",
+    "password": "123"
+  },
+  {
+    "username": "popa",
+    "password": "123"
+  },
+  {
+    "username": "newtest",
+    "password": "123"
   }
 ]
