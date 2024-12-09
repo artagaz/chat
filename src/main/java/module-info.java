@@ -6,6 +6,6 @@ module com.example.chat {
     requires static lombok;
 
 
-    opens com.example.chat to javafx.fxml;
+    opens com.example.chat to javafx.fxml, com.google.gson;
     exports com.example.chat;
 }
