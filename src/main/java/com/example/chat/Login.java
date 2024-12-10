@@ -11,6 +11,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 //мои
@@ -55,11 +57,9 @@ public class Login extends Application {
 
     public void RegisterButton(ActionEvent actionEvent) {
         Errorslabel.setText("");
-
         ArrayList<Users> users = DataBaseActions.GetUsers();
 
         Errorslabel.setText(DataBaseActions.AddUser(users, RegisterLogin.getText(), RegisterPassword.getText(), RegisterPasswordAgain.getText()));
-
     }
 
     public void LoginButton(ActionEvent actionEvent) {
@@ -69,7 +69,33 @@ public class Login extends Application {
             return;
         }
 
+        //проверка логина
+        ArrayList<Users> users = DataBaseActions.GetUsers();
+        for (Users user : users) {
+
+            if (user.getUsername().equals(LoginLogin.getText())) {
+                String transmittedPassword = DataBaseActions.HashString(LoginPassword.getText(), user.getSalt());
+
+                if (!user.getPassword().equals(transmittedPassword)) Errorslabel.setText("Wrong password");
+                else {
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(Chat.class.getResource("Chat.fxml"));
+                        Scene scene = new Scene(fxmlLoader.load());
+                        Stage stage = new Stage();
+                        stage.setTitle(user.getUsername());
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                break;
+
+            } else Errorslabel.setText("Wrong username");
+        }
 
     }
 }
+
+
 

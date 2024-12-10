@@ -6,9 +6,11 @@ import lombok.Data;
 public class Users {
     private String username;
     private String password;
+    byte[] salt;
 
-    public Users(String login, String pwd) {
-        username = login;
-        password = pwd;
+    public Users(String transmittedUsername, String transmittedPassword, byte[] transmittedSalt) {
+        username = transmittedUsername;
+        password = transmittedPassword;
+        salt = transmittedSalt;
     }
 }
