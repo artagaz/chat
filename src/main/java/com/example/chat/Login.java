@@ -10,9 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 //мои
@@ -20,6 +20,7 @@ import com.example.chat.MyUtils.Users;
 import com.example.chat.MyUtils.DataBaseActions;
 
 @Slf4j
+@Getter
 public class Login extends Application {
     public ToggleGroup LogRegSelect;
 
@@ -33,15 +34,6 @@ public class Login extends Application {
 
     public TextField LoginPassword;
     public TextField LoginLogin;
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(Chat.class.getResource("Login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Login page");
-        stage.setScene(scene);
-        stage.show();
-    }
 
     //register or login selection
     public void LogRegSelect(ActionEvent actionEvent) {
@@ -79,13 +71,11 @@ public class Login extends Application {
                 if (!user.getPassword().equals(transmittedPassword)) Errorslabel.setText("Wrong password");
                 else {
                     try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(Chat.class.getResource("Chat.fxml"));
-                        Scene scene = new Scene(fxmlLoader.load());
-                        Stage stage = new Stage();
-                        stage.setTitle(user.getUsername());
-                        stage.setScene(scene);
-                        stage.show();
-                    } catch (IOException e) {
+                        Chat chat = new Chat();
+                        Stage chatStage = new Stage();
+                        chatStage.setTitle(user.getUsername());
+                        chat.start(chatStage);
+                    } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -94,6 +84,15 @@ public class Login extends Application {
             } else Errorslabel.setText("Wrong username");
         }
 
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(Chat.class.getResource("Login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Login page");
+        stage.setScene(scene);
+        stage.show();
     }
 }
 

@@ -4,6 +4,7 @@ module com.example.chat {
     requires org.slf4j;
     requires com.google.gson;
     requires static lombok;
+    requires java.desktop;
 
 
     opens com.example.chat to javafx.fxml, com.google.gson;
