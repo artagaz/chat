@@ -32,7 +32,7 @@ public class ChatServer {
         }
     }
 
-    static void broadcast(MessageBuilder message, ClientHandler excludeUser) {
+    static void broadcast(String message, ClientHandler excludeUser) {
         for (ClientHandler clientHandler : clientHandlers) {
             if (clientHandler != excludeUser) {
                 clientHandler.sendMessage(message);
@@ -40,7 +40,7 @@ public class ChatServer {
         }
     }
 
-    static void sendMessageToUser(MessageBuilder message, String username) {
+    static void sendMessageToUser(String message, String username) {
         for (ClientHandler clientHandler : clientHandlers) {
             if (clientHandler.getUsername().equals(username)) {
                 clientHandler.sendMessage(message);
@@ -52,10 +52,10 @@ public class ChatServer {
 
 class ClientHandler extends Thread {
     private final Socket socket;
-    private ObjectInputStream input;
-    ObjectOutputStream output;
-
-    MessageBuilder userMessage;
+    private PrintWriter writer;
+    private MessageBuilder jsonMessage;
+    private String username;
+    private String text;
 
 
     private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
@@ -65,16 +65,20 @@ class ClientHandler extends Thread {
     }
 
     public void run() {
-        try (ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-             ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream())) {
+        try (InputStream input = socket.getInputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+             OutputStream output = socket.getOutputStream();
+             PrintWriter writer = new PrintWriter(output, true)) {
+            this.writer = writer;
 
-            Gson gson = new Gson();
-            this.userMessage = gson.fromJson((String) input.readObject(), MessageBuilder.class);
-            logger.info("Client connected with username {}", userMessage.getUsername());
+            // read username
+            this.username = reader.readLine();
+            logger.info("Client connected with username {}", username);
 
-            String text;
+            Gson gsReader = new Gson();
             do {
-                text = gson.fromJson((String) input.readObject(), MessageBuilder.class).getMessage();
+                this.jsonMessage = gsReader.fromJson(reader.readLine(), MessageBuilder.class);
+                text = jsonMessage.getMessage();
                 if (text.startsWith("@")) {
                     int spaceIndex = text.indexOf(' ');
                     String recipient = text.substring(1, spaceIndex);
@@ -83,41 +87,38 @@ class ClientHandler extends Thread {
                     if (message.equals("null"))
                         logger.warn("Null message received");
 
-                    logger.info("Message from {} to {}", userMessage.getUsername(), recipient);
+                    logger.info("Message from {} to {}", username, recipient);
 
-                    ChatServer.sendMessageToUser(userMessage, recipient);
+                    ChatServer.sendMessageToUser(message, recipient);
                 } else {
-                    logger.info("Broadcast message {} from {}", text, userMessage.getUsername());
+                    logger.info("Broadcast message {} from {}", text, username);
 
                     if (text.equals("null"))
                         logger.warn("Null message received");
 
-                    ChatServer.broadcast(userMessage, this);
+                    ChatServer.broadcast(username + ": " + text, this);
                 }
+                //запись в файл
+                MessageBuilder.AddMessage(MessageBuilder.GetMessages(), jsonMessage);
+
             } while (!text.equalsIgnoreCase("exit"));
 
             socket.close();
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         } finally {
             ChatServer.clientHandlers.remove(this);
-            logger.info("Client {} disconnected", userMessage.getUsername());
+            logger.info("Client {} disconnected", username);
         }
     }
 
-    void sendMessage(MessageBuilder message) {
-        if (output != null) {
-            try {
-                output.writeObject(message);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+    void sendMessage(String message) {
+        if (writer != null) {
+            writer.println(message);
         }
     }
 
     String getUsername() {
-        return userMessage.getUsername();
+        return username;
     }
 }

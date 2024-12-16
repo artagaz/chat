@@ -42,5 +42,27 @@
       80,
       -10
     ]
+  },
+  {
+    "username": "321",
+    "password": "ufVBxzo9Y+rGJohJchLheHveGfPbRfVMubW4/lCTddI\u003d",
+    "salt": [
+      -36,
+      -127,
+      -3,
+      -80,
+      68,
+      -118,
+      -40,
+      -23,
+      18,
+      -100,
+      104,
+      31,
+      -120,
+      -49,
+      -63,
+      33
+    ]
   }
 ]
