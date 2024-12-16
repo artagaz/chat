@@ -20,5 +20,27 @@
       -4,
       3
     ]
+  },
+  {
+    "username": "artagaz",
+    "password": "keV7ooAzwgc+/pYenWTkZg5QQQz2l8+X27XF4iEU+XA\u003d",
+    "salt": [
+      50,
+      -1,
+      87,
+      -30,
+      24,
+      -104,
+      51,
+      -80,
+      -33,
+      6,
+      80,
+      125,
+      -1,
+      -56,
+      80,
+      -10
+    ]
   }
 ]

@@ -32,7 +32,7 @@ public class ChatServer {
         }
     }
 
-    static void broadcast(String message, ClientHandler excludeUser) {
+    static void broadcast(MessageBuilder message, ClientHandler excludeUser) {
         for (ClientHandler clientHandler : clientHandlers) {
             if (clientHandler != excludeUser) {
                 clientHandler.sendMessage(message);
@@ -40,7 +40,7 @@ public class ChatServer {
         }
     }
 
-    static void sendMessageToUser(String message, String username) {
+    static void sendMessageToUser(MessageBuilder message, String username) {
         for (ClientHandler clientHandler : clientHandlers) {
             if (clientHandler.getUsername().equals(username)) {
                 clientHandler.sendMessage(message);
@@ -85,14 +85,14 @@ class ClientHandler extends Thread {
 
                     logger.info("Message from {} to {}", userMessage.getUsername(), recipient);
 
-                    ChatServer.sendMessageToUser(message, recipient);
+                    ChatServer.sendMessageToUser(userMessage, recipient);
                 } else {
                     logger.info("Broadcast message {} from {}", text, userMessage.getUsername());
 
                     if (text.equals("null"))
                         logger.warn("Null message received");
 
-                    ChatServer.broadcast(userMessage.getUsername() + ": " + text, this);
+                    ChatServer.broadcast(userMessage, this);
                 }
             } while (!text.equalsIgnoreCase("exit"));
 
@@ -107,7 +107,7 @@ class ClientHandler extends Thread {
         }
     }
 
-    void sendMessage(String message) {
+    void sendMessage(MessageBuilder message) {
         if (output != null) {
             try {
                 output.writeObject(message);

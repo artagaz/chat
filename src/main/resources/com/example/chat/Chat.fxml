@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -12,9 +13,12 @@
     <Label layoutX="25.0" layoutY="14.0" prefHeight="16.0" prefWidth="196.0" text="users: 1" />
     <TextField fx:id="InputField" layoutX="26.0" layoutY="549.0" prefHeight="25.0" prefWidth="896.0" text="default message" />
    <Button fx:id="SendButton" layoutX="929.0" layoutY="549.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="46.0" text="send" />
-   <VBox layoutX="26.0" layoutY="39.0" prefHeight="505.0" prefWidth="948.0" style="-fx-background-color: e8e8e8;" />
-   <Button fx:id="EnterButton" layoutX="-3.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="607.0" prefWidth="1008.0"
-           style="-fx-background-image: url('file:src/main/resources/com/example/chat/maxresdefault.jpg'); -fx-background-size: 1000 600; -fx-background-repeat: no-repeat; -fx-background-position:center;" text="войти" textFill="WHITE">
+   <ScrollPane fx:id="scrollPane" layoutX="23.0" layoutY="31.0" prefHeight="505.0" prefWidth="953.0">
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="503.0" prefWidth="951.0">
+         <VBox fx:id="chatBox" layoutX="7.0" layoutY="7.0" prefHeight="489.0" prefWidth="937.0"/>
+      </AnchorPane>
+   </ScrollPane>
+   <Button fx:id="EnterButton" layoutX="-3.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="607.0" prefWidth="1008.0" style="-fx-background-image: url('file:src/main/resources/com/example/chat/maxresdefault.jpg'); -fx-background-size: 1000 600; -fx-background-repeat: no-repeat; -fx-background-position:center;" text="войти" textFill="WHITE">
       <font>
          <Font size="46.0" />
       </font>

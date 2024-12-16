@@ -17,4 +17,6 @@ public class Chat extends Application {
         stage.show();
         ChatController.setUsername(stage.getTitle());
     }
+
+
 }
