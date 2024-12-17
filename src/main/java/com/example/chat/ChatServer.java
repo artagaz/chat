@@ -32,15 +32,13 @@ public class ChatServer {
         }
     }
 
-    static void broadcast(String message, ClientHandler excludeUser) {
+    static void broadcast(MessageBuilder message) {
         for (ClientHandler clientHandler : clientHandlers) {
-            if (clientHandler != excludeUser) {
-                clientHandler.sendMessage(message);
-            }
+            clientHandler.sendMessage(message);
         }
     }
 
-    static void sendMessageToUser(String message, String username) {
+    static void sendMessageToUser(MessageBuilder message, String username) {
         for (ClientHandler clientHandler : clientHandlers) {
             if (clientHandler.getUsername().equals(username)) {
                 clientHandler.sendMessage(message);
@@ -65,10 +63,7 @@ class ClientHandler extends Thread {
     }
 
     public void run() {
-        try (InputStream input = socket.getInputStream();
-             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-             OutputStream output = socket.getOutputStream();
-             PrintWriter writer = new PrintWriter(output, true)) {
+        try (InputStream input = socket.getInputStream(); BufferedReader reader = new BufferedReader(new InputStreamReader(input)); OutputStream output = socket.getOutputStream(); PrintWriter writer = new PrintWriter(output, true)) {
             this.writer = writer;
 
             // read username
@@ -82,21 +77,19 @@ class ClientHandler extends Thread {
                 if (text.startsWith("@")) {
                     int spaceIndex = text.indexOf(' ');
                     String recipient = text.substring(1, spaceIndex);
-                    String message = text.substring(spaceIndex + 1);
+                    jsonMessage.setMessage(text.substring(spaceIndex + 1));
 
-                    if (message.equals("null"))
-                        logger.warn("Null message received");
+                    if (jsonMessage.getMessage().equals("null")) logger.warn("Null message received");
 
                     logger.info("Message from {} to {}", username, recipient);
 
-                    ChatServer.sendMessageToUser(message, recipient);
+                    ChatServer.sendMessageToUser(jsonMessage, recipient);
                 } else {
                     logger.info("Broadcast message {} from {}", text, username);
 
-                    if (text.equals("null"))
-                        logger.warn("Null message received");
+                    if (text.equals("null")) logger.warn("Null message received");
 
-                    ChatServer.broadcast(username + ": " + text, this);
+                    ChatServer.broadcast(jsonMessage);
                 }
                 //запись в файл
                 MessageBuilder.AddMessage(MessageBuilder.GetMessages(), jsonMessage);
@@ -112,9 +105,10 @@ class ClientHandler extends Thread {
         }
     }
 
-    void sendMessage(String message) {
+    void sendMessage(MessageBuilder message) {
+        Gson gsWriter = new Gson();
         if (writer != null) {
-            writer.println(message);
+            writer.println(gsWriter.toJson(message, MessageBuilder.class));
         }
     }
 

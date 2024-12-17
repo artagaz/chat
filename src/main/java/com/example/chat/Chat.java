@@ -16,7 +16,10 @@ public class Chat extends Application {
         stage.setScene(scene);
         stage.show();
         ChatController.setUsername(stage.getTitle());
+
     }
+
+
 
 
 }
