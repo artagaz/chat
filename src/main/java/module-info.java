@@ -11,4 +11,6 @@ module com.example.chat {
     exports com.example.chat;
     exports com.example.chat.MyUtils;
     opens com.example.chat.MyUtils to com.google.gson, javafx.fxml;
+    exports com.example.chat.MyUtils.MyExceptiosn;
+    opens com.example.chat.MyUtils.MyExceptiosn to com.google.gson, javafx.fxml;
 }

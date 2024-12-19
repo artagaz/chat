@@ -34,14 +34,14 @@ public class ChatServer {
 
     static void broadcast(MessageBuilder message) {
         for (ClientHandler clientHandler : clientHandlers) {
-            clientHandler.sendMessage(message);
+            clientHandler.sendMessage(message, clientHandlers.size());
         }
     }
 
     static void sendMessageToUser(MessageBuilder message, String username) {
         for (ClientHandler clientHandler : clientHandlers) {
             if (clientHandler.getUsername().equals(username)) {
-                clientHandler.sendMessage(message);
+                clientHandler.sendMessage(message, clientHandlers.size());
                 break;
             }
         }
@@ -51,9 +51,7 @@ public class ChatServer {
 class ClientHandler extends Thread {
     private final Socket socket;
     private PrintWriter writer;
-    private MessageBuilder jsonMessage;
     private String username;
-    private String text;
 
 
     private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
@@ -63,7 +61,10 @@ class ClientHandler extends Thread {
     }
 
     public void run() {
-        try (InputStream input = socket.getInputStream(); BufferedReader reader = new BufferedReader(new InputStreamReader(input)); OutputStream output = socket.getOutputStream(); PrintWriter writer = new PrintWriter(output, true)) {
+        try (InputStream input = socket.getInputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+             OutputStream output = socket.getOutputStream();
+             PrintWriter writer = new PrintWriter(output, true)) {
             this.writer = writer;
 
             // read username
@@ -71,8 +72,9 @@ class ClientHandler extends Thread {
             logger.info("Client connected with username {}", username);
 
             Gson gsReader = new Gson();
+            String text;
             do {
-                this.jsonMessage = gsReader.fromJson(reader.readLine(), MessageBuilder.class);
+                MessageBuilder jsonMessage = gsReader.fromJson(reader.readLine(), MessageBuilder.class);
                 text = jsonMessage.getMessage();
                 if (text.startsWith("@")) {
                     int spaceIndex = text.indexOf(' ');
@@ -105,10 +107,11 @@ class ClientHandler extends Thread {
         }
     }
 
-    void sendMessage(MessageBuilder message) {
+    void sendMessage(MessageBuilder message, int activeUsers) {
         Gson gsWriter = new Gson();
         if (writer != null) {
             writer.println(gsWriter.toJson(message, MessageBuilder.class));
+            writer.println(activeUsers);
         }
     }
 

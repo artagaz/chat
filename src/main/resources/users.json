@@ -64,5 +64,27 @@
       -63,
       33
     ]
+  },
+  {
+    "username": "123123",
+    "password": "NhihulkQyrrkM8jE/RrsprgqtrAsRamMKY+Rorzq7Dk\u003d",
+    "salt": [
+      -99,
+      47,
+      -105,
+      -119,
+      28,
+      -126,
+      13,
+      -20,
+      -86,
+      26,
+      55,
+      -79,
+      -16,
+      -52,
+      103,
+      86
+    ]
   }
 ]
